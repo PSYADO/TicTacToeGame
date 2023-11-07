@@ -243,3 +243,66 @@ public class GUI extends JFrame implements ActionListener
             RedrawGameBoard();
         }
     }
+ private void RedrawGameBoard()
+    {
+        BusinessLogic.ClearPanelSouth(pnlSouth,pnlTop,pnlNewGame,
+                pnlPlayingField,pnlBottom,radioPanel);
+        BusinessLogic.ShowGame(pnlSouth,pnlPlayingField);
+
+        btnEmpty[wonNumber1].setBackground(new Color(220, 220, 220));
+        btnEmpty[wonNumber2].setBackground(new Color(220, 220, 220));
+        btnEmpty[wonNumber3].setBackground(new Color(220, 220, 220));
+        remainingMoves = 1;
+
+        for(int x=1; x <= 9; ++x)
+        {
+            btnEmpty[x].setText("");
+            btnEmpty[x].setEnabled(setTableEnabled);
+        }
+
+        win = false;
+    }
+
+    private void CheckWin()
+    {
+        for(int x=0; x < 8; ++x)
+        {
+            if(!btnEmpty[winCombo[x][0]].getText().equals("") &&
+                    btnEmpty[winCombo[x][0]].getText().equals(btnEmpty[winCombo[x][1]].getText()) &&
+                    btnEmpty[winCombo[x][1]].getText().equals(btnEmpty[winCombo[x][2]].getText())
+
+            )
+            {
+                win = true;
+                wonNumber1 = winCombo[x][0];
+                wonNumber2 = winCombo[x][1];
+                wonNumber3 = winCombo[x][2];
+                btnEmpty[wonNumber1].setBackground(Color.white);
+                btnEmpty[wonNumber2].setBackground(Color.white);
+                btnEmpty[wonNumber3].setBackground(Color.white);
+                break;
+            }
+        }
+        if(win || (!win && remainingMoves > 9))
+        {
+            if(win)
+            {
+                if(startingPlayer.equals("X"))
+                {
+                    if(remainingMoves % 2 == 0)
+                        message = "      X has won!";
+                    else
+                        message = "      O has won!";
+                }
+                else
+                {
+                    if(remainingMoves % 2 == 0)
+                        message = "      O has won!";
+                    else
+                        message = "      X has won!";
+                }
+                JOptionPane.showMessageDialog(null, message, "Congrats!",
+                        JOptionPane.INFORMATION_MESSAGE);
+
+            }
+            else if(!win && remainingMoves > 9)
