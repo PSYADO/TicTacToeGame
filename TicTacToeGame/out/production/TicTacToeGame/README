@@ -1,0 +1,11 @@
+/*
+The way this checks the if someone won is:
+Firstly: it checks if the btnEmpty[x] is not equal to an empty string-    x being the array number
+inside the multi-dimensional array winCombo[checks inside each of the 7 sets][the first number]
+Secondly: it checks if btnEmpty[x] is equal to btnEmpty[y]- x being winCombo[each set][the first number]
+y being winCombo[each set the same as x][the second number] (So basically checks if the first and
+second number in each set is equal to each other)
+Third: it checks if btnEmpty[y] is equal to btnEmpty[z]- y being the same y as last time and z being
+winCombo[each set as y][the third number]
+Conclusion: So basically it checks if it is equal to the btnEmpty is equal to each set of numbers
+*/
