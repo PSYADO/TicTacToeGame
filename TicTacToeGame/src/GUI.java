@@ -306,3 +306,18 @@ public class GUI extends JFrame implements ActionListener
 
             }
             else if(!win && remainingMoves > 9)
+                {
+                message = "Both players have tied!";
+                JOptionPane.showMessageDialog(null, message, "Tie Game!",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+            for(int x=1; x <= 9; ++x)
+            {
+                btnEmpty[x].setEnabled(false);
+            }
+            win = false;
+            inGame = false;
+            startingPlayer = "";
+        }
+    }
+}
