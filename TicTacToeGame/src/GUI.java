@@ -158,3 +158,88 @@ public class GUI extends JFrame implements ActionListener
                 BusinessLogic.ShowGame(pnlSouth,pnlPlayingField);
             }
             else
+{
+                if(inGame)
+                {
+                    int option = JOptionPane.showConfirmDialog(null, "If you start a new game," +
+                                    " your current game will be lost..." + "n" +"Are you sure you want to continue?"
+                            , "New Game?" ,JOptionPane.YES_NO_OPTION);
+                    if(option == JOptionPane.YES_OPTION)
+                    {
+                        inGame = false;
+                        startingPlayer = "";
+                        setTableEnabled = false;
+                    }
+                    else
+                    {
+                        BusinessLogic.ShowGame(pnlSouth,pnlPlayingField);
+                    }
+                }
+
+                if(!inGame)
+                {
+                    RedrawGameBoard();
+                }
+            }
+        }
+
+        else if(source == mnuExit)
+        {
+            int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?",
+                    "Quit" ,JOptionPane.YES_NO_OPTION);
+            if(option == JOptionPane.YES_OPTION)
+            {
+                System.exit(0);
+            }
+        }
+
+        else if(source == mnuStartingPlayer)
+        {
+            if(inGame)
+            {
+                JOptionPane.showMessageDialog(null, "Cannot select a new Starting "+
+                        "Player at this time.nFinish the current game, or select a New Game "+
+                        "to continue", "Game In Session..", JOptionPane.INFORMATION_MESSAGE);
+                BusinessLogic.ShowGame(pnlSouth,pnlPlayingField);
+            }
+            else
+            {
+                setTableEnabled = true;
+                BusinessLogic.ClearPanelSouth(pnlSouth,pnlTop,pnlNewGame,
+                        pnlPlayingField,pnlBottom,radioPanel);
+
+                SelectX.addActionListener(new RadioListener());
+                SelectO.addActionListener(new RadioListener());
+                radioPanel.setLayout(new GridLayout(2,1));
+
+                radioPanel.add(SelectX);
+                radioPanel.add(SelectO);
+                pnlSouth.setLayout(new GridLayout(2, 1, 2, 1));
+                pnlSouth.add(radioPanel);
+                pnlSouth.add(pnlBottom);
+            }
+        }
+        pnlSouth.setVisible(false);
+        pnlSouth.setVisible(true);
+    }
+
+    private class RadioListener implements ActionListener
+    {
+        public void actionPerformed(ActionEvent event)
+        {
+            JRadioButton theButton = (JRadioButton)event.getSource();
+            if(theButton.getText().equals("User Plays X"))
+            {
+                startingPlayer = "X";
+            }
+            if(theButton.getText().equals("User Plays O"))
+            {
+                startingPlayer = "O";
+            }
+
+
+            pnlSouth.setVisible(false);
+            pnlSouth.setVisible(true);
+            RedrawGameBoard();
+        }
+    }
